@@ -4,8 +4,7 @@ echo "===== SYSTEM INFORMATION ====="
 
 echo ""
 
-echo "Hostname:"
-hostname
+echo "Hostname: $(hostname)"
 
 echo "Current User: $(whoami)"
 echo 
