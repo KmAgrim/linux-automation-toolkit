@@ -19,4 +19,9 @@ date -u
 echo "Curren Disk Usage:"
 df -h
 
+echo "Current Memory Usage:"
+free -h
+
+echo "Current User:"
+who -Hm
 
