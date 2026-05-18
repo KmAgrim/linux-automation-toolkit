@@ -25,8 +25,6 @@ echo "==== Current Memory Usage ===="
 free -h
 echo
 
-echo "Current User:"
-who -Hm
 
 echo "IP Address:"
 ip -4 a | grep -w "inet" | grep -w "ens33"
