@@ -7,24 +7,26 @@ echo ""
 echo "Hostname:"
 hostname
 
-echo "Current User:"
-whoami
+echo "Current User: $(whoami)"
+echo 
 
-echo "Uptime:"
-uptime
+echo "Uptime: $(uptime)"
+echo
 
 echo "Current System Date:"
-date -u
+date
+echo 
 
-echo "Curren Disk Usage:"
-df -h
+echo "==== Curren Disk Usage ===="
+df -h /
+echo
 
-echo "Current Memory Usage:"
+echo "==== Current Memory Usage ===="
 free -h
+echo
 
 echo "Current User:"
 who -Hm
 
 echo "IP Address:"
-ip -c=always a
-
+ip -4 a | grep -w "inet" | grep -w "ens33"
