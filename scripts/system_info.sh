@@ -25,3 +25,6 @@ free -h
 echo "Current User:"
 who -Hm
 
+echo "IP Address:"
+ip -c=always a
+
