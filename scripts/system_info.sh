@@ -40,27 +40,35 @@ support
 sleep 5
 continue
 else
-if ((REPLY == 0)); then
-echo "Exiting."
-break
-elif ((REPLY == 1)); then
-echo -e "\nHostname: $(hostname)\tCurrent User: ${USER}\n"
-elif ((REPLY == 2)); then
-echo -e "Uptime: $(uptime)\n"
-elif ((REPLY == 3)); then
-echo -e "Current System Date:$(date)\n"
-elif ((REPLY == 4)); then
-echo -e "====\tCurrent Disk Usage\t===="
-echo -e "\n$(df -h / --output=size,used,avail,pcent)\n"
+case "$REPLY" in
+0)      echo "Exiting."
+        exit 1
+        ;;
+1)
+        echo -e "\nHostname: $(hostname)\tCurrent User: ${USER}\n"
+        ;;
+2) 
+        echo -e "Uptime: $(uptime)\n"
+        ;;
 
-elif ((REPLY == 5)); then
-echo "==== Current Memory Usage ===="
-echo -e "$(free -h | tr -s '[:blank:]' '\t' | cut -f 1-4,7)\n"
+3) 
+        echo -e "Current System Date:$(date)\n"
+        ;;
+4)
+        echo -e "====\tCurrent Disk Usage\t===="
+        echo -e "\n$(df -h / --output=size,used,avail,pcent)\n"
+        ;;
 
-elif ((REPLY == 6)); then
-echo -e "IP Address  $(ip -br a)"
-fi
-if [[ "$REPLY" == [1-5] ]]; then
+5)
+        echo "==== Current Memory Usage ===="
+        echo -e "$(free -h | tr -s '[:blank:]' '\t' | cut -f 1-4,7)\n"
+        ;;
+
+6)
+        echo -e "IP Address  $(ip -br a)"
+        ;;
+esac
+if [[ "$REPLY" == [1-6] ]]; then
 sleep 5
 fi
 fi
