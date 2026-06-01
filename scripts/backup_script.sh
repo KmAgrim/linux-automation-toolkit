@@ -1,6 +1,6 @@
 #!/bin/bash
 USAGE() {
-echo "Usage: $0 source_directory backup_directory."
+echo "Usage: $(basename "$0") source_directory backup_directory."
 }
 
 if [ "$#" -ne 2 ]; then
