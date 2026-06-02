@@ -57,7 +57,7 @@ HELP
 exit 1
 else
 for file in "$@"; do 
-fname="$(basename "$file")" 
+fname="${file##*/}"
 if [[ -e "$file" ]]; then
 if [[ -d "$file" ]]; then # if its directory
 DirCount "$file" # funcion counting sub directories
@@ -72,7 +72,7 @@ fi # end of file existence check
 if [[ -d "$file" ]]; then
 Report "$file" "$fname" # function to print the report for individual directories
 else 
-echo -e "${fname} is a regular File.\n"
+echo -e "${fname%.*} is a regular File.\n"
 fi
 max_Sdir=$((max_Sdir+dir_SDirCount))
 max_Sfile=$((max_Sfile+dir_fcount))
