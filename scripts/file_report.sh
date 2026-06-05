@@ -1,37 +1,36 @@
 #!/bin/bash
-PROGNAME="$(basename "$0")"
 HELP() {
-    echo "Usage = ./${PROGNAME} FILE..."
+    echo "Usage = ./${0##*/} FILE..."
 }
 Summary() {
-if (( arg_Dir > 0 )); then
+if (( total_count > 0 )); then
 cat <<- _EOF_
-Total Directories Provided as Arguments = $arg_Dir
+Total Directories Provided as Arguments = $total_count
 Total Sub Directories traversed = $max_Sdir  
 Total Sub Directory Files traversed = $max_Sfile
 _EOF_
 fi
-if (( ivalid_path > 0 )); then
-    echo "Total Invalid Paths = ${ivalid_path}"
+if (( total_count[2] > 0 )); then
+    echo "Total Invalid Paths = ${total_count[2]}"
 fi
-if (( arg_file > 0 )); then
-    echo "Total Files provided as arguments = ${arg_file}"
+if (( total_count[1] > 0 )); then
+    echo "Total Files provided as arguments = ${total_count[1]}"
 fi
 }
 
 DirCount() {
     local dir="$1"
-    arg_Dir=$((arg_Dir+1))
+    ((++total_count))
     dir_SDirCount="$(find "$dir" -type d | wc -l)"
     if ((dir_SDirCount > 0)); then
-        dir_SDirCount=$((dir_SDirCount - 1)) # to exclude the directory itself from the count
+        ((--dir_SDirCount)) # to exclude the directory itself from the count
     fi
 }
-FileCount() {
+FileCount() { # for counting number of files in directory
     local file="$1"
     dir_fcount="$(find "$file" -type f | wc -l)"
 }
-Report() { # this function will be used to print the report for individual directories
+Report() { #  print the report for individual directories
     local dir="$1"
     local fname="$2"
     cat <<- _EOF_
@@ -42,14 +41,11 @@ Total Number of Files = $dir_fcount
 _EOF_
     return
 }
-
-ivalid_path=0
-arg_Dir=0
-arg_file=0
+total_count=(0 0 0) # index 0 -> directory , 1 -> file , 2 -> invalid path.
 max_Sdir=0
 max_Sfile=0
-dir_fcount=0
-dir_SDirCount=0
+dir_fcount=
+dir_SDirCount=
 
 if (("$#" < 1)); then
 echo "No Arguments Provided. Exiting." >&2
@@ -57,16 +53,16 @@ HELP
 exit 1
 else
 for file in "$@"; do 
-fname="${file##*/}"
+fname="$(basename "$file")"
 if [[ -e "$file" ]]; then
 if [[ -d "$file" ]]; then # if its directory
 DirCount "$file" # funcion counting sub directories
 FileCount "$file" # function counting files in the directory
 elif [[ -f "$file" ]]; then
-arg_file=$((arg_file+1)) 
+((++total_count[1])) 
 fi # end of file check
 else 
-ivalid_path=$((ivalid_path+1))
+((++total_count[2]))
 continue;
 fi # end of file existence check
 if [[ -d "$file" ]]; then
@@ -76,8 +72,8 @@ echo -e "${fname%.*} is a regular File.\n"
 fi
 max_Sdir=$((max_Sdir+dir_SDirCount))
 max_Sfile=$((max_Sfile+dir_fcount))
-dir_fcount=0 # reset the counter so max_Sdir and max_Sfile will be correct
 dir_SDirCount=0
+dir_fcount=0
 done
 Summary 
 sleep 3
