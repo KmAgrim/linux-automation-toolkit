@@ -1,17 +1,25 @@
-# Linux Automation Toolkit
+Linux Automation Toolkit
 
-A Linux/Bash scripting project focused on learning system administration and shell automation concepts.
+Scripts
 
-## Current Features
+system_info.sh
+    Menu driven system information utility.
 
-- Displays current user
-- Shows system uptime
-- Displays disk usage
-- Displays memory usage
-- Shows IPv4 address information
+backup_script.sh
+    Creates compressed timestamped backups.
 
-## Usage
+file_report.sh
+    Reports information about files and directories.
 
-Run:
+Requirements
 
-./scripts/system_info.sh
+Linux
+Bash
+
+Usage Examples
+
+./backup_script.sh source_dir backup_dir
+
+./file_report.sh dir1 dir2 file1
+
+./system_info.sh

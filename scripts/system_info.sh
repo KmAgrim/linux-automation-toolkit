@@ -13,10 +13,15 @@ _EOF_
 }
 
 support(){
-cat <<- _EOF_
-Correct Options are 0 1 2 3 4 5 6
-Only A single digit for example -> 0 Not 01
+        local error_type="$1" 
+        if (( error_type == 1 )); then # Value 1 for Incorrect Option 
+        echo -e "Correct Options are 0 1 2 3 4 5 6"
+        elif (( error_type == 2 )); then # Value 2 for Invalid Format
+        cat <<- _EOF_ 
+        Invalid Format Given.
+        Correct Format is a single digit.
 _EOF_
+        fi
 }
 
 sys_usage(){
@@ -45,7 +50,7 @@ sys_usage(){
         ;;
 
 6)
-        echo -e "IP Address  $(ip -br a)"
+        echo -e "IP Address  $(ip -br a show label 'ens33' | cut -d '/' -f 1)"
         ;;
 esac
 }
@@ -61,13 +66,11 @@ echo "No Option given. Pls Provide an Option." >&2
 sleep 2
 continue
 elif [[ ! "$REPLY" =~ ^[[:digit:]]+$ ]]; then
-echo "Invalid format given." >&2
-support
+support 2
 sleep 3
 continue
 elif [[ ! "$REPLY" =~ ^[0123456]{1}$ ]]; then
-echo "Given Option is Not Valid." >&2
-support
+support 1
 sleep 3
 continue
 else
