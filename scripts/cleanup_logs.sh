@@ -3,7 +3,7 @@ USAGE(){
     local err="$1"
     if (( err == 1 )); then
     cat <<- _EOF_
-Usage: /${0##*/} log_directory days
+Usage: ./${0##*/} log_directory days
 Example 
 ./${0##*/} logs/ 30
 Exiting!
