@@ -17,6 +17,9 @@ archive_old_files.sh
 cleanup_logs.sh 
     Removes .log files older than the specified number of days using file modification time (mtime).
 
+disk_usage_report.sh
+    Generates Disk Usage for a given Directory and show Largest 10 Directories and Files.
+
 Requirements
 
 Linux
@@ -33,3 +36,5 @@ Usage Examples
 ./archive_old_files.sh source_dir archive_dir days
 
 ./cleanup_logs.sh log_directory days
+
+./disk_usage_report.sh some_directory

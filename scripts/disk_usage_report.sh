@@ -34,6 +34,9 @@ valid_Dir(){
     echo -e "Given Path is not a directory!\n" >&2
     USAGE 1
     return 1
+    elif [[ ! -r "$dir" ]]; then
+    echo -e "Given Directory not readable for ${USER}!.Exiting.\n" >&2
+    return 1
     else
     return 0
     fi
@@ -41,7 +44,7 @@ valid_Dir(){
 TotalSize(){
     local dir="$1"
     local TSize=0
-    TSize="$(cut -f 1 < <(du -sh "$dir"))"
+    TSize="$(du -sh "$dir" 2> /dev/null | cut -f 1)"
 cat <<- _EOF_
 Total Size:
 $TSize
@@ -52,7 +55,8 @@ LargestDir(){
     local dir="$1"
 cat <<- _EOF_
 Largest Directories
-$(du -h -S --max-depth=1 "$dir" | sort -hr)
+$(find "$dir" -mindepth 1 -maxdepth 1 -type d -exec du -h --max-depth=0 '{}' '+' 2> /dev/null | sort -hr | head)
+
 _EOF_
     return 0
 }
@@ -61,7 +65,8 @@ LargestFile(){
     local dir="$1"
 cat <<- _EOF_
 Largest Files
-$(du --all -S -h "$dir" | sort -hr | head )
+$(find "$dir" -type f -exec du -h '{}' '+' 2> /dev/null | sort -hr | head )
+
 _EOF_
     return 0
 }
