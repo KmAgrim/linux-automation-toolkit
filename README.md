@@ -3,7 +3,7 @@ Linux Automation Toolkit
 Scripts
 
 system_info.sh
-    Menu driven system information utility.
+    Menu-driven system information utility.
 
 backup_script.sh
     Creates compressed timestamped backups.
@@ -12,16 +12,19 @@ file_report.sh
     Reports information about files and directories.
 
 archive_old_files.sh
-	Creates Compressed timestamped archives of files that are older than the specified date.
+    Creates compressed timestamped archives containing files older than the specified number of days.
 
-cleanup_logs.sh 
-    Removes .log files older than the specified number of days using file modification time (mtime).
+cleanup_logs.sh
+    Removes .log files older than the specified number of days using modification time (mtime).
 
 disk_usage_report.sh
-    Generates Disk Usage for a given Directory and show Largest 10 Directories and Files.
+    Generates a disk usage report for a directory and displays the 10 largest files and directories.
 
 process_info.sh
-    Provide info about all the process that match the given process name.
+    Displays information about processes matching a given process name.
+
+network_info.sh
+    Displays network information based on user selection or command-line argument.
 
 Requirements
 
@@ -43,3 +46,5 @@ Usage Examples
 ./disk_usage_report.sh some_directory
 
 ./process_info.sh process_name
+
+./network_info.sh [OPTION]
