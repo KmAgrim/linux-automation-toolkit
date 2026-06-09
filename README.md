@@ -20,6 +20,9 @@ cleanup_logs.sh
 disk_usage_report.sh
     Generates Disk Usage for a given Directory and show Largest 10 Directories and Files.
 
+process_info.sh
+    Provide info about all the process that match the given process name.
+
 Requirements
 
 Linux
@@ -38,3 +41,5 @@ Usage Examples
 ./cleanup_logs.sh log_directory days
 
 ./disk_usage_report.sh some_directory
+
+./process_info.sh process_name

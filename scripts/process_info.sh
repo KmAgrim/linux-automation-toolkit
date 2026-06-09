@@ -35,22 +35,20 @@ valid_ArgC(){
 }
 find_process(){
     local name="$1"
-    if [[ ! "$name" =~ ^[[:alnum:]\]+[[:alnum:]]+$ ]]; then
-    echo "Process Name is not in Valid Format!" >&2
-    return 1
-    else
-    if ps -p "$(pgrep -d ',' "$name")" -o pid,user,%cpu,%mem; then
-    echo "Processes Found: $"
+    local pids="$(pgrep --exact -- "$name")"
+    if [[ ! -z "$pids" ]]; then
+    echo "Processes Found: ${name}"
+    ps -C "$name" -o pid,user,%cpu,%mem
+    echo -e "Process Count: $(wc -l < <(echo "$pids"))"
     return 0
     else
     echo -e "Process Not Found! Exitng...\n" >&2
     return 1
     fi
-    fi
 }
 
 if valid_ArgC "$#"; then
 if find_process "$@"; then
-echo "Success!"
+echo
 fi
 fi
